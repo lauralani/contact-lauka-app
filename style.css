@@ -36,7 +36,7 @@ h1{
 }
 
 .fish{
-	background-image: url('http://www.geertjanhendriks.nl/codepen/form/fish.png');
+	background-image: url('img/fish.png');
 	width: 235px;
 	height: 104px;
 	margin-left: -235px;
@@ -62,7 +62,7 @@ h1{
 
 header{
 	height: 160px;
-	background: url('http://www.geertjanhendriks.nl/codepen/form/golf.png') repeat-x bottom;
+	background: url('img/golf.png') repeat-x bottom;
 }
 
 #form{
@@ -144,17 +144,6 @@ label{
 	-o-transition: background-image 0.7s;
 	width: 566px;
 	padding-top: 2px;
-}
-
-.formgroup{
-	background-image: url('http://www.geertjanhendriks.nl/codepen/form/pixel.gif');	
-}
-.formgroup-active{
-	background-image: url('http://www.geertjanhendriks.nl/codepen/form/octo.png');
-}
-.formgroup-error{
-	background-image: url('http://www.geertjanhendriks.nl/codepen/form/octo-error.png');
-	color: red;
 }
 
 .formgroup label[for]::after
