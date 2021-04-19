@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -8,44 +9,48 @@
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <script src="main.js"></script>
 </head>
+
 <body onload="loadtextcaptcha()">
     <header>
         <h1>Contact me</h1>
     </header>
-    
+
     <div id="form">
-    
-    <div class="fish" id="fish"></div>
-    <div class="fish" id="fish2"></div>
-    
-    <form id="waterform" method="post" action="/api/contact" autocomplete="off">
-    
-    <div class="formgroup" id="name-form">
-        <label for="name">Your name</label>
-        <input type="text" id="name" name="name" required/>
-    </div>
-    
-    <div class="formgroup" id="email-form">
-        <label for="email">Your e-mail</label>
-        <input type="email" id="email" name="email" required/>
-    </div>
-    
-    <div class="formgroup" id="message-form">
-        <label for="message">Your message</label>
-        <textarea id="message" name="message" required></textarea>
-    </div>
 
-    <div class="formgroup" id="captcha-form">
-        <label for="captcha">What is 5 + three?</label>
-        <input type="text" id="captcha" name="captcha" required></input>
-    </div>
+        <div class="fish" id="fish"></div>
+        <div class="fish" id="fish2"></div>
 
-    <div class="formgroup" id="confirm-label">
-        <label>The asterisk (*) denotes a required field.</label>
-    </div>
-    
-    <input type="submit" value="Send your message!" />
-    </form>
+        <form id="waterform" method="post" action="/api/contact" autocomplete="off">
+
+            <div class="formgroup" id="name-form">
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="name" required />
+            </div>
+
+            <div class="formgroup" id="email-form">
+                <label for="email">Your e-mail</label>
+                <input type="email" id="email" name="email" required />
+            </div>
+
+            <div class="formgroup" id="message-form">
+                <label for="message">Your message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <div class="formgroup" id="captcha-form">
+                <label id="label-captcha" for="captcha">CAPTCHA loading...</label>
+                <input type="text" id="captcha" name="captcha" required></input>
+            </div>
+
+            <div class="formgroup" id="confirm-label">
+                <label>The asterisk (*) denotes a required field.</label>
+            </div>
+
+            <input type="hidden" value="" name="captcha-hash" id="captcha-hash" />
+
+            <input type="submit" value="Send your message!" />
+        </form>
     </div>
 </body>
+
 </html>

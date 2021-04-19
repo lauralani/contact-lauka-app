@@ -134,6 +134,11 @@ label{
 	margin-top: 20px;
 	padding-left: 20px;
 }
+
+#label-captcha {
+	padding-right: 67px;
+}
+
 .formgroup, .formgroup-active, .formgroup-error{
 	background-repeat: no-repeat;
 	background-position: right bottom;

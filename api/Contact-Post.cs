@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +19,25 @@ namespace contact
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "contact")] HttpRequest req)
         {
-            Console.WriteLine(req.Form["name"]);
-            Console.WriteLine(req.Form["email"]);
-            Console.WriteLine(req.Form["message"]);
+            string name = req.Form["name"];
+            string email = req.Form["email"];
+            string body = req.Form["message"];
+            List<string> captcha = JsonConvert.DeserializeObject<List<string>>(req.Form["captcha-hash"]);
+
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] textToHash = Encoding.Default.GetBytes(req.Form["captcha"]);
+            byte[] result = md5.ComputeHash(textToHash);
+            string hashedcaptcha = BitConverter.ToString(result).Replace("-", null).ToLower();
+
+            if (captcha.Contains(hashedcaptcha))
+            {
+                Console.WriteLine("true");
+            }
+            else
+            {
+                Console.WriteLine("false");
+            }
+
 
             return new OkResult();
         }
