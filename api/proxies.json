@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/proxies.json",
+  "proxies": {
+    "Captcha-Proxy": {
+      "matchCondition": {
+        "route": "api/captcha",
+        "methods": [ "GET" ]
+      },
+      "backendUri": "https://api.textcaptcha.com/lauka.app.json"
+    }
+  }
+}
