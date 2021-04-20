@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -9,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace contact
 {
@@ -37,9 +38,27 @@ namespace contact
 
             if (requestbody.CaptchaHash.Contains(hashedcaptcha))
             {
-                //send mail
+                SendGridClient client = new SendGridClient(Environment.GetEnvironmentVariable("SENDGRID_API_KEY"));
+                EmailAddress from = new EmailAddress(Environment.GetEnvironmentVariable("SENDGRID_MAIL_FROM"));
+                string subject = $"lauka.app contact request from {requestbody.Email}";
+                EmailAddress to = new EmailAddress(Environment.GetEnvironmentVariable("SENDGRID_MAIL_TO"));
+                string mailbody = $"Name: {requestbody.Name.Trim()}\n";
+                mailbody += $"Email: {requestbody.Email}\n";
+                mailbody += "---------\n\n";
+                mailbody += $"{requestbody.Message}";
 
-                return new OkObjectResult("OK");
+                SendGridMessage msg = MailHelper.CreateSingleEmail(from, to, subject, mailbody, null);
+                Response response = await client.SendEmailAsync(msg);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return new OkObjectResult("OK");
+                }
+                else
+                {
+                    return new OkObjectResult("MailSendError");
+                }
+                
             }
             else
             {

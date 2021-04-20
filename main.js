@@ -82,6 +82,11 @@ function handleformresponse(status) {
             setmessage("error", "Somehow the request received by our backend was malformed...");
             break;
 
+        case "MailSendError":
+            console.log("Mail Backend failed");
+            setmessage("error", "The email could not be sent in your backend. Please try again later!");
+            break;
+
         case "UndefinedError":
             console.log("Something REALLY went wrong there...");
             break;
