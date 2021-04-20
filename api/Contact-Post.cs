@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,38 +18,33 @@ namespace contact
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "contact")] HttpRequest req)
         {
-            string name = req.Form["name"].ToString().Trim();
-            string email = req.Form["email"];
-            string body = req.Form["message"];
+            StreamReader sr = new StreamReader(req.Body);
 
-            List<string> captcha;
+            FormRequest requestbody;
             try
             {
-                captcha = JsonConvert.DeserializeObject<List<string>>(req.Form["captcha-hash"]);
+                requestbody = JsonConvert.DeserializeObject<FormRequest>(await sr.ReadToEndAsync());
             }
             catch
             {
-                return new BadRequestResult();
+                return new OkObjectResult("InvalidRequest");
             }
-            
 
             MD5 md5 = new MD5CryptoServiceProvider();
-            string input = req.Form["captcha"].ToString().Trim().ToLower();
-            byte[] textToHash = Encoding.Default.GetBytes(input);
+            byte[] textToHash = Encoding.Default.GetBytes(requestbody.Captcha.Trim().ToLower());
             byte[] result = md5.ComputeHash(textToHash);
             string hashedcaptcha = BitConverter.ToString(result).Replace("-", null).ToLower();
 
-            if (captcha.Contains(hashedcaptcha))
+            if (requestbody.CaptchaHash.Contains(hashedcaptcha))
             {
-                Console.WriteLine("true");
+                //send mail
+
+                return new OkObjectResult("OK");
             }
             else
             {
-                Console.WriteLine("false");
+                return new OkObjectResult("InvalidCaptcha");
             }
-
-
-            return new OkResult();
         }
     }
 }

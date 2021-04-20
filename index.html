@@ -20,7 +20,7 @@
         <div class="fish" id="fish"></div>
         <div class="fish" id="fish2"></div>
 
-        <form id="waterform" method="post" action="/api/contact" autocomplete="off">
+        <form id="waterform" action="javascript:formsubmit()" autocomplete="off">
 
             <div class="formgroup" id="name-form">
                 <label for="name">Your name</label>
@@ -48,7 +48,11 @@
 
             <input type="hidden" value="" name="captcha-hash" id="captcha-hash" />
 
-            <input type="submit" value="Send your message!" />
+            <div id="info-message" class="formgroup status info"></div>
+            <div id="success-message" class="formgroup status success"></div>
+            <div id="error-message" class="formgroup status error"></div>
+            
+            <button type="submit" id="submit">Send your message!</button>
         </form>
     </div>
 </body>

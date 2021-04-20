@@ -81,10 +81,10 @@ form{
 	
 	
 }
-label, input, textarea{
+label, input, textarea, button {
 	display: block;	
 }
-input, textarea{
+input, textarea, button {
 	width: 500px;	
 	border: none;
 	border-radius: 20px;
@@ -107,12 +107,13 @@ input:focus, textarea:focus{
 	border: solid 3px #77bde0;	
 }
 
-textarea{
-	height: 100px;	
-	resize: none; 
+textarea {
+	height: 100px;
+	min-height: 100px;
+	resize: vertical; 
 	overflow: auto;
 }
-input[type="submit"]{
+button {
 	background-color: #F90;
 	color: white;
 	height: 50px;
@@ -125,20 +126,19 @@ input[type="submit"]{
 	-o-transition: background-color 0.5s;
 	transition: background-color 0.5s;
 }
-input[type="submit"]:hover{
+button:hover, button:disabled {
 	background-color: #e58f0e;
-	
 }
 label{
 	font-size: 1.5em;
 	margin-top: 20px;
 	padding-left: 20px;
 }
-
+/*
 #label-captcha {
 	padding-right: 67px;
 }
-
+*/
 .formgroup, .formgroup-active, .formgroup-error{
 	background-repeat: no-repeat;
 	background-position: right bottom;
@@ -147,11 +147,42 @@ label{
 	-webkit-transition: background-image 0.7s;
 	-moz-transition: background-image 0.7s;
 	-o-transition: background-image 0.7s;
-	width: 566px;
+	width: auto;
 	padding-top: 2px;
 }
 
 .formgroup label[for]::after
 {
     content: " *";
+}
+
+.status label {
+	margin: 0;
+}
+
+.status {
+	font-size: 1.5em;
+	margin-top: 10px;
+	border: solid 3px;
+	border-radius: 20px;
+	text-align: center;
+	vertical-align: middle;
+}
+.status:empty {
+	display: none;
+}
+
+.success {
+	border-color: greenyellow;
+	color: white;
+}
+
+.info {
+	border-color: lightseagreen;
+	color: #fff;
+}
+
+.error {
+	border-color: red;
+	color: red;
 }
