@@ -19,13 +19,14 @@ namespace contact
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "contact")] HttpRequest req)
         {
-            string name = req.Form["name"];
+            string name = req.Form["name"].ToString().Trim();
             string email = req.Form["email"];
             string body = req.Form["message"];
             List<string> captcha = JsonConvert.DeserializeObject<List<string>>(req.Form["captcha-hash"]);
 
             MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] textToHash = Encoding.Default.GetBytes(req.Form["captcha"]);
+            string input = req.Form["captcha"].ToString().Trim().ToLower();
+            byte[] textToHash = Encoding.Default.GetBytes(input);
             byte[] result = md5.ComputeHash(textToHash);
             string hashedcaptcha = BitConverter.ToString(result).Replace("-", null).ToLower();
 
