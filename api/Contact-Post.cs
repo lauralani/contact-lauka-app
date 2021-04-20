@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace contact
@@ -22,7 +20,17 @@ namespace contact
             string name = req.Form["name"].ToString().Trim();
             string email = req.Form["email"];
             string body = req.Form["message"];
-            List<string> captcha = JsonConvert.DeserializeObject<List<string>>(req.Form["captcha-hash"]);
+
+            List<string> captcha;
+            try
+            {
+                captcha = JsonConvert.DeserializeObject<List<string>>(req.Form["captcha-hash"]);
+            }
+            catch
+            {
+                return new BadRequestResult();
+            }
+            
 
             MD5 md5 = new MD5CryptoServiceProvider();
             string input = req.Form["captcha"].ToString().Trim().ToLower();
