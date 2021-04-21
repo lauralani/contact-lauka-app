@@ -84,7 +84,7 @@ function handleformresponse(status) {
 
         case "MailSendError":
             console.log("Mail Backend failed");
-            setmessage("error", "The email could not be sent in your backend. Please try again later!");
+            setmessage("error", "The email could not be sent in our backend. Please try again later!");
             break;
 
         case "UndefinedError":
